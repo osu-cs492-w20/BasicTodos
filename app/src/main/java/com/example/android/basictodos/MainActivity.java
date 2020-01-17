@@ -9,10 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView mTodoListTV;
     private EditText mTodoEntryET;
+
+    private ArrayList<String> mTodoList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,13 +27,19 @@ public class MainActivity extends AppCompatActivity {
         mTodoEntryET = findViewById(R.id.et_todo_entry);
 //        todoListTV.setText("TODO: finish todo app");
 
+        mTodoList = new ArrayList<>();
+
         Button addTodoBtn = findViewById(R.id.btn_add_todo);
         addTodoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String todoText = mTodoEntryET.getText().toString();
                 if (!TextUtils.isEmpty(todoText)) {
-                    mTodoListTV.setText(todoText);
+                    mTodoList.add(0, todoText);
+                    mTodoListTV.setText("");
+                    for (String todo : mTodoList) {
+                        mTodoListTV.append(todo + "\n\n");
+                    }
                     mTodoEntryET.setText("");
                 }
             }
